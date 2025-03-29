@@ -1,0 +1,53 @@
+/* Make the entire screen utilized */
+.shelf-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  border: 2px solid blue;
+}
+
+/* Navbar */
+.navbar-custom {
+  flex-shrink: 0;
+  padding-left: 1%;
+}
+
+/* Bookshelf section */
+.shelf-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border: 2px solid red;
+}
+
+/* Set a fixed size for book tiles */
+.book-tile {
+  display: flex;
+  /* align-items: center; */
+  justify-content: center;
+  text-align: center;
+}
+
+/* Add Book Tile */
+.add-book-card {
+  background-color: #ffffff;
+  border: 2px dashed #007bff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.add-book-card:hover {
+  background-color: #e9ecef;
+}
+
+/* Book Image Styling */
+.book-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image scales properly */
+}
+
+/* Book Card Hover Effect */
+

@@ -1,0 +1,28 @@
+.rpv-core__inner-pages {
+    overflow: auto;
+    scrollbar-width: thin;  /* For Firefox */
+    scrollbar-color: rgb(255, 169, 169) transparent;
+    border-radius: 4px;
+}
+
+/* WebKit Browsers (Chrome, Edge, Safari) */
+.rpv-core__inner-pages::-webkit-scrollbar {
+    overflow: auto;
+    scrollbar-width: thin;  /* For Firefox */
+    scrollbar-color: rgba(255, 150, 150, 0.903) transparent;
+    border-radius: 10px;
+}
+
+.rpv-core__inner-pages::-webkit-scrollbar-thumb {
+    overflow: auto;
+    scrollbar-width: thin;  /* For Firefox */
+    scrollbar-color: rgba(255, 150, 150, 0.903) transparent;
+    border-radius: 10px;
+}
+
+.rpv-core__inner-pages::-webkit-scrollbar-track {
+    overflow: auto;
+    scrollbar-width: thin;  /* For Firefox */
+    scrollbar-color: rgba(255, 150, 150, 0.903) transparent;
+    border-radius: 10px;
+}
