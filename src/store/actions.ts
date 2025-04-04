@@ -10,7 +10,7 @@ export const signupUser = createAsyncThunk(
   async (formData: SignupFormData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/signup",
+        "/api/signup",
         formData,
         {
           withCredentials: true
@@ -30,7 +30,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post(
         
-        "http://localhost:8080/login",
+        "/api/login",
         formData,
         {withCredentials: true}
       );
@@ -48,7 +48,7 @@ export const generateImage = createAsyncThunk(
   async (text: string, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/image/generate-image",
+        "/llm/api/image/generate-image",
         { prompt: text },
         {
           headers: {

@@ -21,7 +21,7 @@ const Shelf = () => {
 
   const fetchBooks = async () => {
     try {
-      const response = await axios.get("http://localhost:8080/books", {
+      const response = await axios.get("/api/books", {
         withCredentials: true,
       });
       const booksData = response.data.map(
@@ -59,7 +59,7 @@ const Shelf = () => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:8080/upload", formData, {
+      await axios.post("/api/upload", formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

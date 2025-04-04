@@ -42,7 +42,7 @@ const BookViewer = () => {
   useEffect(() => {
     const fetchPdf = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/books/${id}`, {
+        const response = await fetch(`api/books/${id}`, {
           credentials: "include",
           method: "GET",
           headers: { Accept: "application/pdf" },
