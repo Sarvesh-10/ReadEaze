@@ -55,12 +55,13 @@
   }
   
   .chat-input {
-    /* flex-grow: 1; */
+    flex-grow: 1;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
     outline: none;
     font-size: 16px;
+
   }
   
   .send-button {
