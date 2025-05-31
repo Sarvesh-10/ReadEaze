@@ -30,4 +30,4 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:${{ github.ref_name }}
-            ${{ github.ref_name == 'master' && 'yourdockerhubuser/frontend-app:latest' || '' }}
+            ${{ github.ref_name == 'master' && ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:latest' || '' }}
