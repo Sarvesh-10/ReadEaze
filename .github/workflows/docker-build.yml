@@ -28,6 +28,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:${{ github.ref_name }}
-            ${{ github.ref_name == 'master' && ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:latest' || '' }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:${{ github.ref_name == 'master' && 'backend-latest' || format('backend-{0}', github.ref_name) }}
