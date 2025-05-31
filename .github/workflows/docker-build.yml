@@ -29,5 +29,5 @@ jobs:
           context: .
           push: true
           tags: |
-            yourdockerhubuser/frontend-app:${{ github.ref_name }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/readeaze-images:${{ github.ref_name }}
             ${{ github.ref_name == 'master' && 'yourdockerhubuser/frontend-app:latest' || '' }}
