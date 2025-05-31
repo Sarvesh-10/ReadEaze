@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import LoadingOverlay from "../Components/LoadingOverlay/LoadingOverlay";
-import { Button, Card, Col, Container, Navbar, Row } from "react-bootstrap";
+import { Button, Card, Col, Navbar, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import "./Shelf.css";
 import { useEffect, useRef, useState } from "react";
@@ -20,8 +20,9 @@ const Shelf = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchBooks = async () => {
+    const fetchBooksurl  = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
     try {
-      const response = await axios.get("http://localhost:8080/books", {
+      const response = await axios.get(fetchBooksurl, {
         withCredentials: true,
       });
       const booksData = response.data.map(
@@ -34,6 +35,7 @@ const Shelf = () => {
       setBooks(booksData);
     } catch (err) {
       console.error("Error fetching books:", err);
+      setError("Failed to fetch books. Please try again later.");
       navigate("/login");
       toast("Login Again");
     }
@@ -59,7 +61,8 @@ const Shelf = () => {
     formData.append("file", file);
 
     try {
-      await axios.post("http://localhost:8080/upload", formData, {
+      const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
+      await axios.post(uploadUrl, formData, {
         withCredentials: true,
         headers: { "Content-Type": "multipart/form-data" },
       });

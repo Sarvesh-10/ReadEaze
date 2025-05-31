@@ -8,9 +8,10 @@ import { LoginFormData } from "../Pages/Login";
 export const signupUser = createAsyncThunk(
   "user/signupUser",
   async (formData: SignupFormData, { rejectWithValue }) => {
+    const signupUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.SIGNUP_URL}`;
     try {
       const response = await axios.post(
-        "http://localhost:8080/signup",
+        signupUrl,
         formData,
         {
           withCredentials: true
@@ -27,10 +28,11 @@ export const signupUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData: LoginFormData, { rejectWithValue }) => {
+    const loginUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.LOGIN_URL}`;
     try {
       const response = await axios.post(
         
-        "http://localhost:8080/login",
+        loginUrl,
         formData,
         {withCredentials: true}
       );
@@ -47,8 +49,9 @@ export const generateImage = createAsyncThunk(
   "user/generateImage",
   async (text: string, { rejectWithValue }) => {
     try {
+      const generateImageUrl = `${window.__ENV__.LLM_BASE_URL}${window.__ENV__.LLM_GENERATE_IMAGE_URL}`;
       const response = await axios.post(
-        "http://localhost:8000/api/image/generate-image",
+        generateImageUrl,
         { prompt: text },
         {
           headers: {

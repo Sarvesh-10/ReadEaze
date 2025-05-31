@@ -8,9 +8,9 @@ import menuReducer from "./menuslice";
 
 import {
   TypedUseSelectorHook,
-  useDispatch,
+  
   useSelector,
-  useStore,
+  
 } from "react-redux";
 
 const rootReducer = combineReducers({

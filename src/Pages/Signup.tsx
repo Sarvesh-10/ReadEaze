@@ -25,6 +25,7 @@ const Signup: React.FC = () => {
   const [err, setErr] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(err)
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -44,6 +45,7 @@ const Signup: React.FC = () => {
 
       navigate("/login");
     } catch (err) {
+      console.error("Error during signup:", err); 
       toast.error("Signup Failed");
       console.log("Failed to Signup");
     }
