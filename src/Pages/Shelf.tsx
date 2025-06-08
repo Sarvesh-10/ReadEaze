@@ -25,13 +25,18 @@ const Shelf = () => {
       const response = await axios.get(fetchBooksurl, {
         withCredentials: true,
       });
-      const booksData = response.data.map(
-        (book: { id: number; name: string; coverUrl?: string }) => ({
-          id: book.id,
-          title: book.name,
-          image: book.coverUrl || "/assets/dummy-book.jpg", // Use default if no cover
-        })
-      );
+      
+      // Check if response.data is a non-empty array before mapping
+      const booksData = Array.isArray(response.data) && response.data.length > 0
+        ? response.data.map(
+            (book: { id: number; name: string; coverUrl?: string }) => ({
+              id: book.id,
+              title: book.name,
+              image: book.coverUrl || "/assets/dummy-book.jpg", // Use default if no cover
+            })
+          )
+        : [];  // empty array if no data or not an array
+      
       setBooks(booksData);
     } catch (err) {
       console.error("Error fetching books:", err);
@@ -40,6 +45,7 @@ const Shelf = () => {
       toast("Login Again");
     }
   };
+  
 
   useEffect(() => {
     fetchBooks();
