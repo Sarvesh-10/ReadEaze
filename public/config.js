@@ -8,5 +8,5 @@ window.__ENV__ = {
     LLM_BASE_URL: "/api/llm",
     LLM_CHAT_URL: "/chat",    
     LLM_CHAT_HISTORY_URL: "/chat/get-history/book",
-    LLM_GENERATE_URL: "/image/generate-image",
+    LLM_GENERATE_IMAGE_URL: "/image/generate-image",
 }

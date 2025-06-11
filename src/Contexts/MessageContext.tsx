@@ -78,7 +78,7 @@ export const MessageProvider = ({children}:{children: ReactNode}) => {
     
         try {
             
-            const chatUrlById = window.__ENV__.LLM_BASE_URL + window.__ENV__.CHAT_URL + `/${id}`;
+            const chatUrlById = window.__ENV__.LLM_BASE_URL + window.__ENV__.LLM_CHAT_URL + `/${id}`;
             const response = await fetch(chatUrlById, {
                 method: "POST",
                 // mode:"cors",
