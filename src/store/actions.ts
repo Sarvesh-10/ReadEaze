@@ -29,6 +29,7 @@ export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData: LoginFormData, { rejectWithValue }) => {
     const loginUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.LOGIN_URL}`;
+    console.log("loginUrl",loginUrl)
     try {
       const response = await axios.post(
         
@@ -39,6 +40,7 @@ export const loginUser = createAsyncThunk(
       console.log("response",response.data)
       return response.data;
     } catch (error: any) {
+      console.error("Login error:", error);
       return rejectWithValue(error.response?.data || "Login failed");
     }
   }
