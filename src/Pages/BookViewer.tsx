@@ -9,7 +9,6 @@ import { MessageContext } from "../Contexts/MessageContext";
 import ImageModal from "../Components/ImageModal/ImageModal";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { generateImage } from "../store/actions";
 import { closeImageModal } from "../store/image-modal-slice";
 import { closeMenu, openMenu } from "../store/menuslice";
 import ContextMenu from "../Components/ContextMenu/ContextMenu";
@@ -42,7 +41,8 @@ const BookViewer = () => {
   useEffect(() => {
     const fetchPdf = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/books/${id}`, {
+        const getBookByIdUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}/${id}`;
+        const response = await fetch(getBookByIdUrl, {
           credentials: "include",
           method: "GET",
           headers: { Accept: "application/pdf" },
@@ -157,13 +157,6 @@ const BookViewer = () => {
       />
     </div>
   );
-};
-
-const menuItemStyle = {
-  padding: "8px 12px",
-  cursor: "pointer",
-  borderBottom: "1px solid #eee",
-  fontSize: "14px",
 };
 
 export default BookViewer;

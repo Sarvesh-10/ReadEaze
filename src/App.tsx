@@ -14,7 +14,7 @@ import { MessageProvider } from './Contexts/MessageContext';
 const App = () => {
   return (
     <MessageProvider>
-    <Router>
+    <Router basename='/app/ui'>
       <ToastContainer position="bottom-left" autoClose={3000} hideProgressBar={false} />
       <Routes>
         <Route path="/" element={<Login />} />

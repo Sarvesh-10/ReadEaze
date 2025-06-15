@@ -1,7 +1,6 @@
 import { Card } from "react-bootstrap";
 
 import booksImage from "../../assets/books.jpg";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const BookCard = ({ id, bookName }: { id: number; bookName: string }) => {
