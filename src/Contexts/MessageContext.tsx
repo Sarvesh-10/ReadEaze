@@ -78,8 +78,8 @@ export const MessageProvider = ({children}:{children: ReactNode}) => {
     
         try {
             
-            
-            const response = await fetch(`http://localhost:8000/api/chat/${id}`, {
+            const chatUrlById = window.__ENV__.LLM_BASE_URL + window.__ENV__.LLM_CHAT_URL + `/${id}`;
+            const response = await fetch(chatUrlById, {
                 method: "POST",
                 // mode:"cors",
                 credentials:"include",
@@ -134,7 +134,8 @@ export const MessageProvider = ({children}:{children: ReactNode}) => {
       };
       const getMessages = async (bookId: string) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/chat/get-history/book/${bookId}`, {
+            const getChatHistoryUrl = window.__ENV__.LLM_BASE_URL + window.__ENV__.LLM_CHAT_HISTORY_URL + `/${bookId}`;
+            const response = await fetch(getChatHistoryUrl, {
                 method: "GET",
                 credentials: "include", // ✅ Cookie will handle user identification
                 headers: { "Content-Type": "application/json" }

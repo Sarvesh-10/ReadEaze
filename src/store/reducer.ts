@@ -30,7 +30,7 @@ const slice = createSlice({
       state.user = action.payload;
       state.loading = false;
     });
-    builder.addCase(signupUser.rejected, (state, action) => {
+    builder.addCase(signupUser.rejected, (state) => {
       state.loading = false;
       state.user = null;
     });
@@ -41,7 +41,7 @@ const slice = createSlice({
         state.user = action.payload;
         state.loading = false;
     });
-    builder.addCase(loginUser.rejected, (state, action) => {
+    builder.addCase(loginUser.rejected, (state) => {
         state.loading = false;
         state.user = null;
     });
