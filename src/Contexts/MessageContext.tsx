@@ -86,55 +86,46 @@ Above all, your goal is to make the user think:
         const controller = new AbortController();
         abortController.current = controller;
     
-        try {
-            
-            const chatUrlById = window.__ENV__.LLM_BASE_URL + window.__ENV__.LLM_CHAT_URL + `/${id}`;
-            const response = await fetch(chatUrlById, {
-                method: "POST",
-                // mode:"cors",
-                credentials:"include",
-                headers: { 
-                    "Content-Type": "application/json",
-                    // "X-Force-Preflight": "true"
-                },
-                body: JSON.stringify({ systemMessage, userMessage }),
-                signal: controller.signal // Pass signal for aborting
+    try {
+        const chatUrlById = `${window.__ENV__.LLM_BASE_URL}${window.__ENV__.LLM_CHAT_URL}/${id}`;
+        const res = await fetch(chatUrlById, {
+            method: "POST",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ systemMessage, userMessage: input }),
+            signal: controller.signal // Pass the signal to the fetch request
+        });
+
+        const data = await res.json();
+        const aiMessage = data.response || "Something went wrong";
+
+        // Simulate typing
+        let i = 0;
+        const interval = setInterval(() => {
+            i++;
+            setMessages((prev) => {
+                const updated = [...prev];
+                updated[updated.length - 1] = {
+                    text: aiMessage.slice(0, i),
+                    sender: "AI",
+                };
+                return updated;
             });
-    
-            if (!response.body) throw new Error("No response body received");
-    
-            const reader = response.body.getReader();
-            const decoder = new TextDecoder();
-            let aiMessage = "";
-    
-            while (true) {
-                const { done, value } = await reader.read();
-                if (done) break;
-    
-                const chunk = decoder.decode(value, { stream: true });
-    
-                // Typing effect: add characters one by one
-                for (let i = 0; i < chunk.length; i++) {
-                    aiMessage += chunk[i];
-                    setTimeout(() => {
-                        setMessages((prevMessages) => {
-                            const updatedMessages = [...prevMessages];
-                            updatedMessages[updatedMessages.length - 1] = { text: aiMessage, sender: "AI" };
-                            return updatedMessages;
-                        });
-                    }, i * 10); // ✅ Adjust for smoother typing
-                }
+
+            if (i >= aiMessage.length) {
+                clearInterval(interval);
+                setIsStreaming(false);
             }
-        } catch (error) {
-            if ((error as Error).name === "AbortError") {
-                console.log("Fetch request was aborted");
-            } else {
-                console.error("Error fetching AI response:", error);
-            }
-        } finally {
-            setIsStreaming(false);
-        }
+        }, 20);
+    } catch (err) {
+        console.error("AI error:", err);
+        setIsStreaming(false);
+    }finally {
+        // Reset the abort controller after the request completes
+        setIsStreaming(false);
+        abortController.current = null;
     };
+    }
     const stopResponse = () => {
         if (abortController.current) {
           abortController.current.abort();
