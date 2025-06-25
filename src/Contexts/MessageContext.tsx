@@ -92,7 +92,7 @@ Above all, your goal is to make the user think:
             method: "POST",
             credentials: "include",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ systemMessage, userMessage: input }),
+            body: JSON.stringify({ systemMessage, userMessage}),
             signal: controller.signal // Pass the signal to the fetch request
         });
 
