@@ -31,6 +31,7 @@ useEffect(() => {
     // Check if the action was rejected
     if (fetchBooks.rejected.match(result)) {
       // Optional: log error or show toast
+      setError("Failed to fetch books. Please try again.");
       console.error("Unauthorized or failed to fetch books:", result.payload);
       navigate("/login"); // redirect to login
     }
