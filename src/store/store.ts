@@ -5,6 +5,7 @@ import { thunk } from "redux-thunk";
 import reducer from "./reducer";
 import imageReducer from "./image-modal-slice";
 import menuReducer from "./menuslice";
+import bookreducer from "./bookSlice";
 
 import {
   TypedUseSelectorHook,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user: reducer,
   image: imageReducer,
   menu: menuReducer,
+  books: bookreducer,
 });
 
 const store = configureStore({
