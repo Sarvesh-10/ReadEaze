@@ -105,7 +105,7 @@ export const fetchBooks = createAsyncThunk(
 // store/actions.ts
 export const uploadBook = createAsyncThunk(
   "books/uploadBook",
-  async (file: File, { dispatch, rejectWithValue }) => {
+  async (file: File, { rejectWithValue }) => {
     const formData = new FormData();
     formData.append("file", file);
 
