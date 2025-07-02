@@ -54,18 +54,21 @@ useEffect(() => {
   if (!event.target.files || event.target.files.length === 0) return;
   const file = event.target.files[0];
 
-  const result = await dispatch(uploadBook(file)).unwrap().catch((err) => {
+  try {
+    const result = await dispatch(uploadBook(file)).unwrap();
+    if (result === "Success") {
+      await dispatch(fetchBooks()).unwrap(); // Ensure refresh before success message
+      toast.success("Book uploaded successfully");
+    }
+  } catch (err: any) {
     if (err === "Unauthorized") {
       navigate("/login");
     } else {
       toast.error("Upload failed");
     }
-  });
-
-  if (result === "Success") {
-    toast.success("Book uploaded successfully");
   }
 };
+
 
 
   return (

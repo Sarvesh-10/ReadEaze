@@ -116,14 +116,6 @@ export const uploadBook = createAsyncThunk(
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      // Now fetch the updated list of books
-      const result = await dispatch(fetchBooks());
-
-      // If fetchBooks fails, consider user unauthorized
-      if (fetchBooks.rejected.match(result)) {
-        return rejectWithValue("Unauthorized");
-      }
-
       return "Success";
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Upload failed");
