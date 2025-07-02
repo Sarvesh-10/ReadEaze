@@ -72,3 +72,53 @@ export const generateImage = createAsyncThunk(
     }
   }
 );
+
+export const fetchBooks = createAsyncThunk(
+  "books/fetchBooks",
+  async (_, { rejectWithValue }) => {
+    const fetchBooksUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
+    try {
+      const response = await axios.get(fetchBooksUrl, {
+        withCredentials: true,
+      });
+
+      // Check if response.data is a non-empty array before mapping
+      const booksData =
+        Array.isArray(response.data) && response.data.length > 0
+          ? response.data.map(
+              (book: { id: number; name: string; coverUrl?: string }) => ({
+                id: book.id,
+                title: book.name,
+                image: book.coverUrl || "/assets/dummy-book.jpg", // Use default if no cover
+              })
+            )
+          : []; // empty array if no data or not an array
+
+      return booksData;
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Failed to fetch books");
+    }
+  }
+);
+
+
+// store/actions.ts
+export const uploadBook = createAsyncThunk(
+  "books/uploadBook",
+  async (file: File, { rejectWithValue }) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
+      await axios.post(uploadUrl, formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      return "Success";
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Upload failed");
+    }
+  }
+);

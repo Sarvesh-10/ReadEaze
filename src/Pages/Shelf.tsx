@@ -1,55 +1,46 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../store/store";
 import LoadingOverlay from "../Components/LoadingOverlay/LoadingOverlay";
 import { Button, Card, Col, Navbar, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import "./Shelf.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import { fetchBooks, uploadBook } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
+import { toast } from "react-toastify";
 
 const Shelf = () => {
-  const loading = useSelector((state: RootState) => state.user.loading);
-  const navigate = useNavigate();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [books, setBooks] = useState<
-    { id: number; title: string; image: string }[]
-  >([]);
-  const [error, setError] = useState<string | null>(null);
+  const loading = useSelector((state: RootState) => state.loading.loading);
 
-  const fetchBooks = async () => {
-    const fetchBooksurl  = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
-    try {
-      const response = await axios.get(fetchBooksurl, {
-        withCredentials: true,
-      });
-      
-      // Check if response.data is a non-empty array before mapping
-      const booksData = Array.isArray(response.data) && response.data.length > 0
-        ? response.data.map(
-            (book: { id: number; name: string; coverUrl?: string }) => ({
-              id: book.id,
-              title: book.name,
-              image: book.coverUrl || "/assets/dummy-book.jpg", // Use default if no cover
-            })
-          )
-        : [];  // empty array if no data or not an array
-      
-      setBooks(booksData);
-    } catch (err) {
-      console.error("Error fetching books:", err);
-      setError("Failed to fetch books. Please try again later.");
-      navigate("/login");
-      toast("Login Again");
-    }
-  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const books = useSelector((state: RootState) => state.books.books);
+  
   
 
-  useEffect(() => {
-    fetchBooks();
-  }, []);
+  const [error, setError] = useState<string | null>(null);
+
+ 
+  
+
+useEffect(() => {
+  const loadBooks = async () => {
+    const result = await dispatch(fetchBooks());
+
+    // Check if the action was rejected
+    if (fetchBooks.rejected.match(result)) {
+      // Optional: log error or show toast
+      setError("Failed to fetch books. Please try again.");
+      console.error("Unauthorized or failed to fetch books:", result.payload);
+      navigate("/login"); // redirect to login
+    }
+  };
+
+  loadBooks();
+}, [dispatch, navigate]);
+
 
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -58,26 +49,27 @@ const Shelf = () => {
   };
 
   const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!event.target.files || event.target.files.length === 0) return;
+  event: React.ChangeEvent<HTMLInputElement>
+) => {
+  if (!event.target.files || event.target.files.length === 0) return;
+  const file = event.target.files[0];
 
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-      const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
-      await axios.post(uploadUrl, formData, {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
-      fetchBooks(); // Refresh books after upload
-    } catch (error) {
-      console.error("Upload error:", error);
+  try {
+    const result = await dispatch(uploadBook(file)).unwrap();
+    if (result === "Success") {
+      await dispatch(fetchBooks()).unwrap(); // Ensure refresh before success message
+      toast.success("Book uploaded successfully");
     }
-  };
+  } catch (err: any) {
+    if (err === "Unauthorized") {
+      navigate("/login");
+    } else {
+      toast.error("Upload failed");
+    }
+  }
+};
+
+
 
   return (
     <>
