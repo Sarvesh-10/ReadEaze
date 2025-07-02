@@ -1,7 +1,7 @@
 // reducers.ts
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loginUser, signupUser } from "./actions";
+import { loginUser, signupUser } from "../actions";
 
 interface User {
   id: number;

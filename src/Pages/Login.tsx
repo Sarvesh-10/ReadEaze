@@ -14,7 +14,8 @@ export interface LoginFormData {
     password: string;
 }
 const Login: React.FC = () => {
-    const loading = useSelector((state: RootState) => state.user.loading);
+    const loading = useSelector((state: RootState) => state.loading.loading);
+
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const [formData, setFormData] = React.useState<LoginFormData>({

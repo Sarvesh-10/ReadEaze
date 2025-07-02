@@ -100,3 +100,33 @@ export const fetchBooks = createAsyncThunk(
     }
   }
 );
+
+
+// store/actions.ts
+export const uploadBook = createAsyncThunk(
+  "books/uploadBook",
+  async (file: File, { dispatch, rejectWithValue }) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
+      await axios.post(uploadUrl, formData, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      // Now fetch the updated list of books
+      const result = await dispatch(fetchBooks());
+
+      // If fetchBooks fails, consider user unauthorized
+      if (fetchBooks.rejected.match(result)) {
+        return rejectWithValue("Unauthorized");
+      }
+
+      return "Success";
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Upload failed");
+    }
+  }
+);

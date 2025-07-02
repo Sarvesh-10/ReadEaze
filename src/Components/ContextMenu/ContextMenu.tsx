@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { closeMenu } from "../../store/menuslice";
+import { closeMenu } from "../../store/slices/menuslice";
 import { generateImage } from "../../store/actions";
 import { AppDispatch } from "../../store/store";
 

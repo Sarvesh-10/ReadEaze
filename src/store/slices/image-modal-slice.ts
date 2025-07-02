@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateImage } from "./actions";
+import { generateImage } from "../actions";
 
 type ImageModalState = {
     isOpen: boolean;

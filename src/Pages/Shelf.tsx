@@ -6,12 +6,13 @@ import { FaPlus } from "react-icons/fa";
 import "./Shelf.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { fetchBooks } from "../store/actions"; // Adjust the import path as necessary
+import { fetchBooks, uploadBook } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
+import { toast } from "react-toastify";
 
 const Shelf = () => {
-  const loading = useSelector((state: RootState) => state.books.loading);
+  const loading = useSelector((state: RootState) => state.loading.loading);
+
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,30 +49,24 @@ useEffect(() => {
   };
 
   const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    if (!event.target.files || event.target.files.length === 0) return;
+  event: React.ChangeEvent<HTMLInputElement>
+) => {
+  if (!event.target.files || event.target.files.length === 0) return;
+  const file = event.target.files[0];
 
-    const file = event.target.files[0];
-    const formData = new FormData();
-    formData.append("file", file);
-
-    try {
-  const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
-  await axios.post(uploadUrl, formData, {
-    withCredentials: true,
-    headers: { "Content-Type": "multipart/form-data" },
+  const result = await dispatch(uploadBook(file)).unwrap().catch((err) => {
+    if (err === "Unauthorized") {
+      navigate("/login");
+    } else {
+      toast.error("Upload failed");
+    }
   });
 
-  const result = await dispatch(fetchBooks());
-  if (fetchBooks.rejected.match(result)) {
-    navigate("/login");
+  if (result === "Success") {
+    toast.success("Book uploaded successfully");
   }
-} catch (error) {
-  console.error("Upload error:", error);
-}
+};
 
-  };
 
   return (
     <>

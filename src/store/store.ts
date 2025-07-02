@@ -2,10 +2,11 @@ import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { thunk } from "redux-thunk";
 // import {reducer } from './reducer';
-import reducer from "./reducer";
-import imageReducer from "./image-modal-slice";
-import menuReducer from "./menuslice";
-import bookreducer from "./bookSlice";
+import reducer from "./slices/reducer";
+import imageReducer from "./slices/image-modal-slice";
+import menuReducer from "./slices/menuslice";
+import bookreducer from "./slices/bookSlice";
+import loading from "./slices/loadingslice";
 
 import {
   TypedUseSelectorHook,
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   image: imageReducer,
   menu: menuReducer,
   books: bookreducer,
+  loading: loading
 });
 
 const store = configureStore({

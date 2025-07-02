@@ -9,8 +9,8 @@ import { MessageContext } from "../Contexts/MessageContext";
 import ImageModal from "../Components/ImageModal/ImageModal";
 import { AppDispatch, RootState } from "../store/store";
 import { useDispatch, useSelector } from "react-redux";
-import { closeImageModal } from "../store/image-modal-slice";
-import { closeMenu, openMenu } from "../store/menuslice";
+import { closeImageModal } from "../store/slices/image-modal-slice";
+import { closeMenu, openMenu } from "../store/slices/menuslice";
 import ContextMenu from "../Components/ContextMenu/ContextMenu";
 
 const workerUrl = `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`;
