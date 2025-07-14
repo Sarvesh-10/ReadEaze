@@ -3,6 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { SignupFormData } from "../Pages/Signup";
 import { LoginFormData } from "../Pages/Login";
+import axiosInstance from "../axiosInterceptor";
 
 // Thunk Action for Signup
 export const signupUser = createAsyncThunk(
@@ -78,10 +79,9 @@ export const fetchBooks = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     const fetchBooksUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
     try {
-      const response = await axios.get(fetchBooksUrl, {
-        withCredentials: true,
+      const response = await axiosInstance.get(fetchBooksUrl, {
+        withCredentials: true, // Include cookies in requests
       });
-
       // Check if response.data is a non-empty array before mapping
       const booksData =
         Array.isArray(response.data) && response.data.length > 0
@@ -111,11 +111,15 @@ export const uploadBook = createAsyncThunk(
 
     try {
       const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
-      await axios.post(uploadUrl, formData, {
-        withCredentials: true,
-        headers: { "Content-Type": "multipart/form-data" },
-      });
-
+     await axiosInstance.post(
+        uploadUrl,
+        formData,
+        {
+          withCredentials: true, // Include cookies in requests
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+     
       return "Success";
     } catch (error: any) {
       return rejectWithValue(error.response?.data || "Upload failed");

@@ -14,6 +14,7 @@ declare global {
       LLM_CHAT_URL: string;
       LLM_CHAT_HISTORY_URL: string;
       LLM_GENERATE_IMAGE_URL: string;
+      REFRESH_TOKEN_URL: string;
     };
   }
 }
