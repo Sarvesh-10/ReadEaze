@@ -21,7 +21,7 @@ interface MessageContextType{
 export const MessageContext = createContext<MessageContextType | undefined>(undefined);
 
 export const MessageProvider = ({children}:{children: ReactNode}) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const [messages, setMessages] = useState<Message[]>([
         {text: "Hello! Need help with anything?", sender: "AI"}
     ]);
@@ -114,7 +114,7 @@ Above all, your goal is to make the user think:
                 });
                 if (!response.ok) {
                     toast.error("Session expired. Please log in again.");
-                    navigate("/login");
+                    throw new Error("Session expired");
                 }
                 response = await fetch(chatUrlById, {
                     method: "POST",
