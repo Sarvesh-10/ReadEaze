@@ -1,4 +1,6 @@
 import { createContext, ReactNode, useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 interface Message {
@@ -19,6 +21,7 @@ interface MessageContextType{
 export const MessageContext = createContext<MessageContextType | undefined>(undefined);
 
 export const MessageProvider = ({children}:{children: ReactNode}) => {
+    const navigate = useNavigate();
     const [messages, setMessages] = useState<Message[]>([
         {text: "Hello! Need help with anything?", sender: "AI"}
     ]);
@@ -89,7 +92,7 @@ Above all, your goal is to make the user think:
         try {
             
             const chatUrlById = window.__ENV__.LLM_BASE_URL + window.__ENV__.LLM_CHAT_URL + `/${id}`;
-            const response = await fetch(chatUrlById, {
+            var response = await fetch(chatUrlById, {
                 method: "POST",
                 // mode:"cors",
                 credentials:"include",
@@ -102,7 +105,35 @@ Above all, your goal is to make the user think:
             });
     
             if (!response.body) throw new Error("No response body received");
+            if (response.status == 401) {
+                let refreshTokenUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.REFRESH_TOKEN_URL}`;
+                response = await fetch(refreshTokenUrl, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: { "Content-Type": "application/json" }
+                });
+                if (!response.ok) {
+                    toast.error("Session expired. Please log in again.");
+                    navigate("/login");
+                }
+                response = await fetch(chatUrlById, {
+                    method: "POST",
+                    credentials:"include",
+                    headers: { 
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ systemMessage, userMessage }),
+                    signal: controller.signal // Pass signal for aborting
+                });
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch AI response: ${response.status}`);
+                }
+                
+            }
     
+            if (!response.body) {
+                throw new Error("No response body received");
+            }
             const reader = response.body.getReader();
             const decoder = new TextDecoder();
             let aiMessage = "";

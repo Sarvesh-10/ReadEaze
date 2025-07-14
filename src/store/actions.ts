@@ -136,6 +136,7 @@ async(id:number, { rejectWithValue }) => {
       withCredentials: true, // Include cookies in requests
       responseType: "blob", // Expect a PDF blob
     });
+    console.log("response", response.data);
     return URL.createObjectURL(response.data); // Return the blob URL
   } catch (error: any) {
     return rejectWithValue(error.response?.data || "Failed to fetch book");

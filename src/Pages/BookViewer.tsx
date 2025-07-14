@@ -43,15 +43,24 @@ const BookViewer = () => {
     if (id !== undefined) {
       const bookIdNum = Number(id);
       if (!isNaN(bookIdNum)) {
-        dispatch(getBookById(bookIdNum)).then((result) => {
+        dispatch(getBookById(bookIdNum)).unwrap().then((result) => {
           if (getBookById.rejected.match(result)) {
             console.error("Failed to fetch book by ID:", result.payload);
-          }
-          // this dispatch returns a url how to use that 
-          // to fetch the pdf and set it to pdfBlobUrl
-          const pdfUrl = result.payload as string; // Assuming the payload is the PDF URL
-          setPdfBlobUrl(pdfUrl);
+          } else {
+            // The result is the PDF URL
+            const pdfUrl = result as string;
+            setPdfBlobUrl(pdfUrl);
+          } 
         });
+        // dispatch(getBookById(bookIdNum)).then((result) => {
+        //   if (getBookById.rejected.match(result)) {
+        //     console.error("Failed to fetch book by ID:", result.payload);
+        //   }
+        //   // this dispatch returns a url how to use that 
+        //   // to fetch the pdf and set it to pdfBlobUrl
+        //   const pdfUrl = result.payload as string; // Assuming the payload is the PDF URL
+        //   setPdfBlobUrl(pdfUrl);
+        // });
       }
     }
   }, [id]);
