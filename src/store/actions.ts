@@ -126,3 +126,18 @@ export const uploadBook = createAsyncThunk(
     }
   }
 );
+
+export const getBookById = createAsyncThunk(
+  "books/getBookById",
+async(id:number, { rejectWithValue }) => {
+  const getBookByIdUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}/${id}`;
+  try {
+    const response = await axiosInstance.get(getBookByIdUrl, {
+      withCredentials: true, // Include cookies in requests
+      responseType: "blob", // Expect a PDF blob
+    });
+    return URL.createObjectURL(response.data); // Return the blob URL
+  } catch (error: any) {
+    return rejectWithValue(error.response?.data || "Failed to fetch book");
+  }
+});

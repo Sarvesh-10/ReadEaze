@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeImageModal } from "../store/slices/image-modal-slice";
 import { closeMenu, openMenu } from "../store/slices/menuslice";
 import ContextMenu from "../Components/ContextMenu/ContextMenu";
+import { getBookById } from "../store/actions";
 
 const workerUrl = `https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js`;
 
@@ -39,24 +40,20 @@ const BookViewer = () => {
   );
 
   useEffect(() => {
-    const fetchPdf = async () => {
-      try {
-        const getBookByIdUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}/${id}`;
-        const response = await fetch(getBookByIdUrl, {
-          credentials: "include",
-          method: "GET",
-          headers: { Accept: "application/pdf" },
+    if (id !== undefined) {
+      const bookIdNum = Number(id);
+      if (!isNaN(bookIdNum)) {
+        dispatch(getBookById(bookIdNum)).then((result) => {
+          if (getBookById.rejected.match(result)) {
+            console.error("Failed to fetch book by ID:", result.payload);
+          }
+          // this dispatch returns a url how to use that 
+          // to fetch the pdf and set it to pdfBlobUrl
+          const pdfUrl = result.payload as string; // Assuming the payload is the PDF URL
+          setPdfBlobUrl(pdfUrl);
         });
-
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        setPdfBlobUrl(blobUrl);
-      } catch (error) {
-        console.error("Error fetching PDF:", error);
       }
-    };
-
-    fetchPdf();
+    }
   }, [id]);
 
   const clearSelection = () => { 
