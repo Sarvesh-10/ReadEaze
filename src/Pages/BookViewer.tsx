@@ -52,15 +52,6 @@ const BookViewer = () => {
             setPdfBlobUrl(pdfUrl);
           } 
         });
-        // dispatch(getBookById(bookIdNum)).then((result) => {
-        //   if (getBookById.rejected.match(result)) {
-        //     console.error("Failed to fetch book by ID:", result.payload);
-        //   }
-        //   // this dispatch returns a url how to use that 
-        //   // to fetch the pdf and set it to pdfBlobUrl
-        //   const pdfUrl = result.payload as string; // Assuming the payload is the PDF URL
-        //   setPdfBlobUrl(pdfUrl);
-        // });
       }
     }
   }, [id]);

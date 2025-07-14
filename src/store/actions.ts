@@ -142,3 +142,19 @@ async(id:number, { rejectWithValue }) => {
     return rejectWithValue(error.response?.data || "Failed to fetch book");
   }
 });
+
+export const getChatHistory = createAsyncThunk(
+  "chat/getChatHistory",
+  async (bookId: string, { rejectWithValue }) => {
+    const getChatHistoryUrl = `${window.__ENV__.LLM_BASE_URL}${window.__ENV__.LLM_CHAT_HISTORY_URL}/${bookId}`;
+    try {
+      const response = await axiosInstance.get(getChatHistoryUrl, {
+        withCredentials: true, // Include cookies in requests
+        headers: { "Content-Type": "application/json" },
+      });
+      return response.data; // Assuming the response is in the expected format
+    } catch (error: any) {
+      return rejectWithValue(error.response?.data || "Failed to fetch chat history");
+    }
+  }
+);
