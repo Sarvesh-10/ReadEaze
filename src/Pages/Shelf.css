@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100vh;
   background-color: #f8f9fa;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 }
 
 /* Navbar */
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   padding: 1em;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 /* Set a fixed size for book tiles */
@@ -36,6 +36,7 @@
   border: 2px dashed #007bff;
   cursor: pointer;
   transition: 0.3s;
+  height: 35vh;
 }
 
 .add-book-card:hover {
@@ -49,5 +50,10 @@
   object-fit: cover; /* Ensures the image scales properly */
 }
 
-/* Book Card Hover Effect */
+.add-book-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;     /* horizontal center */
+  justify-content: center; /* vertical center */
+}
 
