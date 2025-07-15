@@ -1,8 +1,62 @@
 .book-card {
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
+    text-overflow: ellipsis;
+    overflow-wrap:anywhere;
+    height: 35vh;
   }
   
   .book-card:hover {
     transform: scale(1.05);
   }
+
+.book-name {
+  font-weight:450;
+  color: #333;
+  text-align: center;
+  /* overflow: hidden; */
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none; /* IE and Edge */
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera */
+  }
+  display: -webkit-box;
+  line-clamp: 8;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  line-height: 1.4em;
+  max-height: 2.8em;
+}
+
+
+.with-tooltip {
+  position: relative;
+}
+
+.card-tooltip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(13, 110, 253, 0.85); /* Bootstrap blue with 85% opacity */
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  text-align: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px); /* Optional: glassy effect */
+}
+
+
+
+.with-tooltip:hover .card-tooltip {
+  opacity: 1;
+}
