@@ -72,7 +72,7 @@ useEffect(() => {
 
 
   return (
-    <>
+    <div style={{height: "100vh", overflowY: "auto"}}>
       <LoadingOverlay loading={loading} />
       <div className="shelf-container">
         <Navbar bg="dark" variant="dark" className="navbar-custom">
@@ -112,14 +112,14 @@ useEffect(() => {
             ) : (
               books.map((book) => (
                 <Col key={book.id} xs={6} sm={4} md={3} lg={2}>
-                  <BookCard id={book.id} bookName={book.title} />
+                  <BookCard id={book.id} bookName={book.title} bookCoverUrl={book.image}/>
                 </Col>
               ))
             )}
           </Row>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
