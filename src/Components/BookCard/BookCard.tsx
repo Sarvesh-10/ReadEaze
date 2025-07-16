@@ -1,10 +1,10 @@
 import { Card } from "react-bootstrap";
 
-import booksImage from "../../assets/books.jpg";
+// import booksImage from "../../assets/books.jpg";
 import { useNavigate } from "react-router-dom";
 import "./BookCard.css"; // Import the CSS file for styling
 
-const BookCard = ({ id, bookName }: { id: number; bookName: string }) => {
+const BookCard = ({ id, bookName, bookCoverUrl }: { id: number; bookName: string; bookCoverUrl: string }) => {
 
 
     const navigate = useNavigate();
@@ -16,10 +16,10 @@ const BookCard = ({ id, bookName }: { id: number; bookName: string }) => {
     return (
         <Card className="book-card with-tooltip" onClick={handleClick} border="dark">
           <div className="card-tooltip">{bookName}</div>
-        <Card.Img variant="top" src= {booksImage} />
-          <Card.Body>
+        <Card.Img variant="top" src= {bookCoverUrl} className="card-image"/>
+          {/* <Card.Body>
             <Card.Text className="book-name">{bookName}</Card.Text>
-          </Card.Body>
+          </Card.Body> */}
         </Card>
     );
 }

@@ -9,6 +9,13 @@
   .book-card:hover {
     transform: scale(1.05);
   }
+  .card-image {
+    height: 60%;
+    height: inherit;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
 
 .book-name {
   font-weight:450;
@@ -35,6 +42,12 @@
 }
 
 .card-tooltip {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;                /* Fix: correct property */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   position: absolute;
   top: 0;
   left: 0;
@@ -51,6 +64,7 @@
   transition: opacity 0.25s ease-in-out;
   pointer-events: none;
   z-index: 5;
+  height: inherit;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(2px); /* Optional: glassy effect */
 }

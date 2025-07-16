@@ -88,10 +88,10 @@ export const fetchBooks = createAsyncThunk(
       const booksData =
         Array.isArray(response.data) && response.data.length > 0
           ? response.data.map(
-              (book: { id: number; name: string; coverUrl?: string }) => ({
+              (book: { id: number; name: string; cover_image?: string }) => ({
                 id: book.id,
                 title: book.name,
-                image: book.coverUrl || "/assets/dummy-book.jpg", // Use default if no cover
+                image: book.cover_image || "/assets/dummy-book.jpg", // Use default if no cover
               })
             )
           : []; // empty array if no data or not an array
