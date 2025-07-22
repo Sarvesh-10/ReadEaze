@@ -1,0 +1,45 @@
+.file-drop-box {
+  height: 120px;
+  border: 2px dashed #999;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-align: center;
+  background-color: #f8f9fa;
+}
+
+.file-selected-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 10px 15px;
+  background-color: #f0f0f0;
+}
+
+.file-name {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 1.2rem;
+  margin-left: 12px;
+  cursor: pointer;
+}
+
+.mode-box {
+  background-color: #f9f9f9;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #e0e0e0;
+}
