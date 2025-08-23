@@ -6,7 +6,7 @@ import { FaPlus } from "react-icons/fa";
 import "./Shelf.css";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { fetchBooks, uploadBook } from "../store/actions"; // Adjust the import path as necessary
+import { fetchBooks } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
 import { toast } from "react-toastify";
 import UploadModal from "../Components/UploadBookComponent/UploadBookModal";
@@ -43,35 +43,10 @@ useEffect(() => {
 }, [dispatch, navigate]);
 
 
-  const handleButtonClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
   const uploadBookButton = () => {
     showUploadModal(true);
   };
 
-  const handleFileUpload = async (
-  event: React.ChangeEvent<HTMLInputElement>
-) => {
-  if (!event.target.files || event.target.files.length === 0) return;
-  const file = event.target.files[0];
-
-  try {
-    // const result = await dispatch(uploadBook(file)).unwrap();
-    // if (result === "Success") {
-    //   await dispatch(fetchBooks()).unwrap(); // Ensure refresh before success message
-    //   toast.success("Book uploaded successfully");
-    // }
-  } catch (err: any) {
-    if (err === "Unauthorized") {
-      navigate("/login");
-    } else {
-      toast.error("Upload failed");
-    }
-  }
-};
 
 
 
@@ -89,13 +64,6 @@ useEffect(() => {
             <Col xs={6} sm={4} md={3} lg={2}>
               <Card className="text-center add-book-card">
                 <Card.Body>
-                  <input
-                    type="file"
-                    accept="application/pdf"
-                    style={{ display: "none" }}
-                    ref={fileInputRef}
-                    onChange={handleFileUpload}
-                  />
                   <Button
                     variant="outline-primary"
                     className="rounded-circle p-3"

@@ -29,8 +29,8 @@ export const signupUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (formData: LoginFormData, { rejectWithValue }) => {
-    // const loginUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.LOGIN_URL}`;
-    const loginUrl = 'http://localhost:8080/login';
+    const loginUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.LOGIN_URL}`;
+    // const loginUrl = 'http://localhost:8080/login';
     console.log("loginUrl",loginUrl)
     try {
       const response = await axios.post(
@@ -78,8 +78,8 @@ export const generateImage = createAsyncThunk(
 export const fetchBooks = createAsyncThunk(
   "books/fetchBooks",
   async (_, { rejectWithValue }) => {
-    // const fetchBooksUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
-    const fetchBooksUrl = 'http://localhost:8080/books';
+    const fetchBooksUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.GET_BOOKS}`;
+    // const fetchBooksUrl = 'http://localhost:8080/books';
     try {
       const response = await axiosInstance.get(fetchBooksUrl, {
         withCredentials: true, // Include cookies in requests
@@ -117,8 +117,8 @@ export const uploadBook = createAsyncThunk(
     formData.append("mode", payload.mode);
 
     try {
-      // const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
-      const uploadUrl = 'http://localhost:8080/upload';
+      const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
+      // const uploadUrl = 'http://localhost:8080/upload';
       await axiosInstance.post(
         uploadUrl,
         formData,
