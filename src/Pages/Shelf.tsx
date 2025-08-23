@@ -4,7 +4,7 @@ import LoadingOverlay from "../Components/LoadingOverlay/LoadingOverlay";
 import { Button, Card, Col, Navbar, Row } from "react-bootstrap";
 import { FaPlus } from "react-icons/fa";
 import "./Shelf.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchBooks } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
