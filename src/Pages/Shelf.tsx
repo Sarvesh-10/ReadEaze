@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchBooks, uploadBook } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
 import { toast } from "react-toastify";
+import UploadModal from "../Components/UploadBookComponent/UploadBookModal";
 
 const Shelf = () => {
   const loading = useSelector((state: RootState) => state.loading.loading);
@@ -18,7 +19,7 @@ const Shelf = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const books = useSelector((state: RootState) => state.books.books);
   
-  
+  const [uploadModal,showUploadModal] = useState(false);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -47,6 +48,9 @@ useEffect(() => {
       fileInputRef.current.click();
     }
   };
+  const uploadBookButton = () => {
+    showUploadModal(true);
+  };
 
   const handleFileUpload = async (
   event: React.ChangeEvent<HTMLInputElement>
@@ -55,11 +59,11 @@ useEffect(() => {
   const file = event.target.files[0];
 
   try {
-    const result = await dispatch(uploadBook(file)).unwrap();
-    if (result === "Success") {
-      await dispatch(fetchBooks()).unwrap(); // Ensure refresh before success message
-      toast.success("Book uploaded successfully");
-    }
+    // const result = await dispatch(uploadBook(file)).unwrap();
+    // if (result === "Success") {
+    //   await dispatch(fetchBooks()).unwrap(); // Ensure refresh before success message
+    //   toast.success("Book uploaded successfully");
+    // }
   } catch (err: any) {
     if (err === "Unauthorized") {
       navigate("/login");
@@ -95,7 +99,7 @@ useEffect(() => {
                   <Button
                     variant="outline-primary"
                     className="rounded-circle p-3"
-                    onClick={handleButtonClick}
+                    onClick= {uploadBookButton}
                   >
                     <FaPlus size={40} />
                   </Button>
@@ -119,6 +123,10 @@ useEffect(() => {
           </Row>
         </div>
       </div>
+      {uploadModal && (
+        <UploadModal
+        show={uploadModal}
+        onHide={() => showUploadModal(false)}/>)}
     </div>
   );
 };
