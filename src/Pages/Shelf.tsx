@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchBooks } from "../store/actions"; // Adjust the import path as necessary
 import BookCard from "../Components/BookCard/BookCard";
-import { toast } from "react-toastify";
 import UploadModal from "../Components/UploadBookComponent/UploadBookModal";
 
 const Shelf = () => {
@@ -16,7 +15,6 @@ const Shelf = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const books = useSelector((state: RootState) => state.books.books);
   
   const [uploadModal,showUploadModal] = useState(false);
