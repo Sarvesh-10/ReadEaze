@@ -11,9 +11,20 @@ import { ToastContainer } from 'react-toastify';
 import BookViewer from './Pages/BookViewer';
 import { MessageProvider } from './Contexts/MessageContext';
 import { useSSE } from './sse';
+import { useSelector } from 'react-redux';
+import { useUserSelector } from './store/selector';
+import { use, useEffect } from 'react';
 
 const App = () => {
-  useSSE(); // Initialize SSE connection
+  
+  const user = useUserSelector((state) => state.user.user);
+  useEffect(() => {
+    if (user) {
+      console.log("SSE initialized for user:", user.id);
+      useSSE();
+    }
+
+  }, [user]);
   return (
     <MessageProvider>
     <Router basename='/app/ui'>
