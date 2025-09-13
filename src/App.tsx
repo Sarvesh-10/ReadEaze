@@ -19,7 +19,6 @@ const SSEWrapper: React.FC = () => {
 
 const App = () => {
   
-  useSSE();
   return (
     <MessageProvider>
       <SSEWrapper />
