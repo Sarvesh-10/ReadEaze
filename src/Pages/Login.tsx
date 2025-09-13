@@ -16,7 +16,7 @@ export interface LoginFormData {
 }
 const Login: React.FC = () => {
     const loading = useSelector((state: RootState) => state.loading.loading);
-    const {setIsLoggedIn} = useAuth()!;
+    const { setIsLoggedIn } = useAuth()!;
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();

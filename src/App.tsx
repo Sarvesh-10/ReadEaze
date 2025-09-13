@@ -11,7 +11,6 @@ import { ToastContainer } from 'react-toastify';
 import BookViewer from './Pages/BookViewer';
 import { MessageProvider } from './Contexts/MessageContext';
 import { useSSE } from './sse';
-import { AuthProvider } from './Contexts/AuthContext';
 const SSEWrapper: React.FC = () => {
   useSSE();
   return null; // hook runs globally, no UI needed
@@ -23,7 +22,6 @@ const App = () => {
   useSSE();
   return (
     <MessageProvider>
-    <AuthProvider>
       <SSEWrapper />
     <Router basename='/app/ui'>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
@@ -36,7 +34,6 @@ const App = () => {
         {/* Add other routes as needed */}
       </Routes>
     </Router>
-    </AuthProvider>
     </MessageProvider>
   );
 };

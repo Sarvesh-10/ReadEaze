@@ -5,12 +5,15 @@ import App from './App.tsx'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Provider } from 'react-redux';
 import store from './store/store.ts';
+import { AuthProvider } from './Contexts/AuthContext.tsx';
 
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
+      <AuthProvider>
     <App />
+    </AuthProvider>
     </Provider>
   </StrictMode>,
 )
