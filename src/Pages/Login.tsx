@@ -7,6 +7,7 @@ import { AppDispatch, RootState } from "../store/store";
 import { loginUser } from "../store/actions";
 import LoadingOverlay from "../Components/LoadingOverlay/LoadingOverlay";
 import { toast } from "react-toastify";
+import { useAuth } from "../Contexts/AuthContext";
 
 
 export interface LoginFormData {
@@ -15,6 +16,7 @@ export interface LoginFormData {
 }
 const Login: React.FC = () => {
     const loading = useSelector((state: RootState) => state.loading.loading);
+    const { setIsLoggedIn } = useAuth()!;
 
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -27,6 +29,7 @@ const Login: React.FC = () => {
         try{
             await dispatch(loginUser(formData)).unwrap();
             toast.success("Login Successful");
+            setIsLoggedIn(true);
             navigate("/bookshelf");
 
         }catch(err){

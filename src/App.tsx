@@ -10,12 +10,20 @@ import Shelf from './Pages/Shelf';
 import { ToastContainer } from 'react-toastify';
 import BookViewer from './Pages/BookViewer';
 import { MessageProvider } from './Contexts/MessageContext';
+import { useSSE } from './sse';
+const SSEWrapper: React.FC = () => {
+  useSSE();
+  return null; // hook runs globally, no UI needed
+};
+
 
 const App = () => {
+  
   return (
     <MessageProvider>
+      <SSEWrapper />
     <Router basename='/app/ui'>
-      <ToastContainer position="bottom-left" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />

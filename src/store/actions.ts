@@ -107,14 +107,19 @@ export const fetchBooks = createAsyncThunk(
 // store/actions.ts
 export const uploadBook = createAsyncThunk(
   "books/uploadBook",
-  async (file: File, { rejectWithValue }) => {
+  async (
+    payload: { file: File; mode: string },
+    thunkAPI: { rejectWithValue: (value: any) => any }
+  ) => {
+    const { file } = payload;
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("mode", payload.mode);
 
     try {
       const uploadUrl = `${window.__ENV__.GO_BASE_URL}${window.__ENV__.UPLOAD_BOOK}`;
       // const uploadUrl = 'http://localhost:8080/upload';
-     await axiosInstance.post(
+      await axiosInstance.post(
         uploadUrl,
         formData,
         {
@@ -122,10 +127,10 @@ export const uploadBook = createAsyncThunk(
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-     
+
       return "Success";
     } catch (error: any) {
-      return rejectWithValue(error.response?.data || "Upload failed");
+      return thunkAPI.rejectWithValue(error.response?.data || "Upload failed");
     }
   }
 );
